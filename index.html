@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Explorador de Registros</title>
+    <meta
+      name="description"
+      content="Explorador visual para buscar, filtrar, ordenar y ver fotos de registros JSON."
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="background backdrop-a"></div>
+    <div class="background backdrop-b"></div>
+
+    <main class="shell">
+      <header class="hero card">
+        <div class="hero-copy">
+          <p class="eyebrow">Explorador visual de JSON</p>
+          <h1>Busca, filtra, ordena y abre la foto de cada registro.</h1>
+          <p class="hero-text">
+            Diseñado para revisar tablas grandes de forma rápida e intuitiva, con panel
+            lateral de detalle, filtros rápidos y columnas configurables.
+          </p>
+          <div class="hero-actions">
+            <label class="button primary">
+              Cargar JSON
+              <input id="file-input" type="file" accept="application/json,.json" hidden />
+            </label>
+            <button id="reload-default" class="button secondary" type="button">
+              Intentar cargar el archivo local
+            </button>
+          </div>
+        </div>
+
+        <div class="hero-stats" id="stats-strip">
+          <article class="stat-card">
+            <span class="stat-label">Registros</span>
+            <strong id="stat-total">0</strong>
+          </article>
+          <article class="stat-card">
+            <span class="stat-label">Filtrados</span>
+            <strong id="stat-filtered">0</strong>
+          </article>
+          <article class="stat-card">
+            <span class="stat-label">Con foto</span>
+            <strong id="stat-photos">0</strong>
+          </article>
+          <article class="stat-card">
+            <span class="stat-label">Edad promedio</span>
+            <strong id="stat-age">—</strong>
+          </article>
+        </div>
+      </header>
+
+      <section class="controls card" aria-label="Filtros y búsqueda">
+        <div class="controls-grid">
+          <label class="field search-field">
+            <span>Buscar</span>
+            <input id="search-input" type="search" placeholder="Nombre, correo, municipio, dirección..." />
+          </label>
+
+          <label class="field">
+            <span>Departamento</span>
+            <select id="department-filter"></select>
+          </label>
+
+          <label class="field">
+            <span>Municipio</span>
+            <select id="municipality-filter"></select>
+          </label>
+
+          <label class="field">
+            <span>Estado laboral</span>
+            <select id="work-filter"></select>
+          </label>
+
+          <label class="field">
+            <span>Estado civil</span>
+            <select id="civil-filter"></select>
+          </label>
+
+          <label class="field small-field">
+            <span>Edad mínima</span>
+            <input id="age-min" type="number" min="0" placeholder="0" />
+          </label>
+
+          <label class="field small-field">
+            <span>Edad máxima</span>
+            <input id="age-max" type="number" min="0" placeholder="99" />
+          </label>
+
+          <div class="field actions-field">
+            <span>Acciones</span>
+            <div class="actions-row">
+              <button id="clear-filters" class="button tertiary" type="button">Limpiar</button>
+              <button id="reset-columns" class="button tertiary" type="button">Restaurar columnas</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="workspace">
+        <article class="card table-card">
+          <div class="table-toolbar">
+            <div>
+              <h2>Tabla</h2>
+              <p id="table-meta">Carga un JSON para comenzar.</p>
+            </div>
+
+            <details class="column-picker">
+              <summary>Columnas visibles</summary>
+              <div id="column-picker-list" class="picker-list"></div>
+            </details>
+          </div>
+
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr id="table-head"></tr>
+              </thead>
+              <tbody id="table-body"></tbody>
+            </table>
+          </div>
+        </article>
+
+        <aside class="card detail-card">
+          <div class="detail-header">
+            <div>
+              <p class="eyebrow">Vista rápida</p>
+              <h2 id="detail-name">Sin selección</h2>
+            </div>
+            <div class="detail-actions">
+              <span id="detail-chip" class="status-chip">Esperando datos</span>
+              <button id="delete-selected" class="button danger" type="button">
+                Eliminar registro
+              </button>
+            </div>
+          </div>
+
+          <div class="photo-frame">
+            <img id="detail-photo" alt="Foto del registro" />
+            <div id="photo-placeholder" class="photo-placeholder">
+              La foto aparecerá aquí al seleccionar un registro.
+            </div>
+          </div>
+
+          <div class="detail-grid" id="detail-grid"></div>
+        </aside>
+      </section>
+    </main>
+
+    <template id="detail-group-template">
+      <section class="detail-group">
+        <h3></h3>
+        <dl></dl>
+      </section>
+    </template>
+
+    <script type="module" src="./app.js"></script>
+  </body>
+</html>
