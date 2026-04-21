@@ -566,9 +566,6 @@ function updateDetail(row) {
   buildDetailGroups(row);
 
   const photoUrl = buildPhotoUrl(row);
-  if (state.currentPhotoUrl && state.currentPhotoUrl !== photoUrl) {
-    URL.revokeObjectURL(state.currentPhotoUrl);
-  }
   state.currentPhotoUrl = photoUrl;
 
   if (photoUrl) {
@@ -692,3 +689,9 @@ function wireEvents() {
 
 wireEvents();
 loadDefaultJson();
+
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('./sw.js').catch((error) => {
+    console.warn('Service worker registration failed:', error);
+  });
+}
