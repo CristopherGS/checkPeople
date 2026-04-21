@@ -222,7 +222,7 @@
   }
 
   function initials(p) {
-    return ((p.firstName[0] || '') + (p.lastName[0] || '')).toUpperCase();
+    return ((p.firstName?.[0] || '') + (p.lastName?.[0] || '')).toUpperCase();
   }
 
   function renderResults(people, query) {
